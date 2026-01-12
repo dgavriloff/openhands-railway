@@ -1,11 +1,8 @@
-# Use the Runtime image which has Node, Python, and other tools pre-installed
-FROM docker.openhands.dev/openhands/runtime:1.1-nikolaik
+# Use the official OpenHands application image
+FROM docker.openhands.dev/openhands/openhands:1.1
 
-# Switch to root
+# Switch to root to ensure permission to write to Railway volumes
 USER root
-
-# Install OpenHands application (CLI)
-RUN pip install openhands-ai
 
 # Set workspace
 WORKDIR /workspace
