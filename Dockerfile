@@ -1,5 +1,5 @@
 # Use a recent stable version of OpenHands
-FROM docker.all-hands.dev/all-hands-ai/openhands:0.24-nikolaik
+FROM ghcr.io/all-hands-ai/openhands:1.1.0
 
 # Switch to root to ensure permission to write to Railway volumes
 USER root
