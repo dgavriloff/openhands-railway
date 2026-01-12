@@ -1,0 +1,55 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE"
+  },
+  "deploy": {
+    "startCommand": "python -m openhands.core.main -t start",
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 300,
+    "restartPolicyType": "ON_FAILURE",
+    "numReplicas": 1
+  },
+  "services": [
+    {
+      "name": "openhands",
+      "serviceName": "openhands",
+      "source": {
+        "repo": "."
+      },
+      "variables": {
+        "RUNTIME": {
+          "description": "Sets runtime to local to avoid DinD requirements on PaaS",
+          "value": "local"
+        },
+        "SANDBOX_USER_ID": {
+          "description": "User ID for file permissions (root is 0)",
+          "value": "0"
+        },
+        "WORKSPACE_BASE": {
+          "description": "The directory where the agent works",
+          "value": "/workspace"
+        },
+        "LLM_API_KEY": {
+          "description": "Your API Key (e.g., OpenAI, Anthropic)",
+          "required": true
+        },
+        "LLM_MODEL": {
+          "description": "The model to use (e.g., gpt-4o, claude-3-5-sonnet-20240620)",
+          "value": "gpt-4o",
+          "required": true
+        },
+        "PORT": {
+          "description": "Port OpenHands listens on",
+          "value": "3000"
+        }
+      },
+      "volumes": [
+        {
+          "mountPath": "/workspace",
+          "name": "openhands-data"
+        }
+      ]
+    }
+  ]
+}
