@@ -1,14 +1,17 @@
-# Use a recent stable version of OpenHands
-FROM ghcr.io/all-hands-ai/openhands:1.1.0
+# Use the Runtime image which has Node, Python, and other tools pre-installed
+FROM docker.openhands.dev/openhands/runtime:1.1-nikolaik
 
-# Switch to root to ensure permission to write to Railway volumes
+# Switch to root
 USER root
 
-# Set the workspace directory where the agent will save files
+# Install OpenHands application
+RUN pip install openhands
+
+# Set workspace
 WORKDIR /workspace
 
-# OpenHands runs on port 3000
+# Expose port
 EXPOSE 3000
 
-# Override entrypoint to force start without looking for Docker socket
+# Start command
 CMD ["python", "-m", "openhands.core.main", "-t", "start"]
